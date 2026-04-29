@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sai Akshita Manthani - AI & ML Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#05050a;
+  --bg2:#0c0c14;
+  --bg3:#13131e;
+  --bg4:#1a1a28;
+  --gold:#d4a853;
+  --gold2:#e8c27a;
+  --gold3:#f0d49a;
+  --text:#ede8f5;
+  --muted:#7a7490;
+  --muted2:#9e99b8;
+  --border:rgba(212,168,83,0.12);
+  --border2:rgba(212,168,83,0.25);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* Custom cursor */
+#cursor{
+  position:fixed;
+  width:8px;height:8px;
+  background:var(--gold);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transition:transform 0.15s ease;
+  transform:translate(-50%,-50%);
+}
+#cursor-ring{
+  position:fixed;
+  width:32px;height:32px;
+  border:1px solid rgba(212,168,83,0.4);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transition:transform 0.4s ease, width 0.3s, height 0.3s, border-color 0.3s;
+  transform:translate(-50%,-50%);
+}
+
+/* Starfield background */
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{
+  position:absolute;
+  background:#fff;
+  border-radius:50%;
+  animation:twinkle var(--d,3s) infinite var(--delay,0s) ease-in-out;
+}
+@keyframes twinkle{0%,100%{opacity:var(--min,0.1)}50%{opacity:var(--max,0.8)}}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.25rem 6vw;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(5,5,10,0.85);
+  backdrop-filter:blur(16px);
+  border-bottom:0.5px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--serif);
+  font-size:1.05rem;
+  color:var(--gold2);
+  letter-spacing:0.04em;
+}
+.nav-links{display:flex;gap:2.5rem}
+.nav-links a{
+  color:var(--muted2);
+  text-decoration:none;
+  font-size:0.8rem;
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  transition:color 0.2s;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;
+  background:var(--gold);transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--gold2)}
+.nav-links a:hover::after{width:100%}
+
+/* Sections */
+section{position:relative;z-index:1;padding:7rem 8vw}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px 8vw 5rem;
+  position:relative;overflow:hidden;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  gap:4rem;
+  align-items:center;
+}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:0.72rem;font-weight:500;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:1.75rem;
+  opacity:0;animation:slideUp 0.8s 0.1s ease forwards;
+}
+.hero-eyebrow span{
+  width:32px;height:1px;background:var(--gold);display:block;
+}
+
+h1{
+  font-family:var(--serif);
+  font-size:clamp(3rem,6.5vw,5.5rem);
+  line-height:1.05;
+  letter-spacing:-0.01em;
+  opacity:0;animation:slideUp 0.8s 0.2s ease forwards;
+}
+h1 em{font-style:italic;color:var(--gold2)}
+
+.hero-tagline{
+  font-size:1.05rem;color:var(--muted2);font-weight:300;
+  margin:1.5rem 0 2.5rem;max-width:520px;
+  opacity:0;animation:slideUp 0.8s 0.3s ease forwards;
+}
+
+.hero-ctas{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;animation:slideUp 0.8s 0.4s ease forwards;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0.75rem 1.8rem;border-radius:4px;
+  font-size:0.88rem;font-weight:500;font-family:var(--sans);
+  text-decoration:none;transition:all 0.25s;cursor:none;border:none;
+}
+.btn-gold{background:var(--gold);color:#0a0800}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-outline{
+  background:transparent;color:var(--gold2);
+  border:1px solid var(--border2);
+}
+.btn-outline:hover{background:rgba(212,168,83,0.08);transform:translateY(-2px)}
+
+/* Hero card */
+.hero-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2rem;
+  opacity:0;animation:slideUp 0.8s 0.5s ease forwards;
+  position:relative;overflow:hidden;
+}
+.hero-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.avatar{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,#d4a853,#8b6914);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:1.6rem;color:#fff;
+  margin-bottom:1.25rem;font-weight:700;
+}
+.hero-card h3{font-size:1.15rem;font-weight:600;margin-bottom:0.2rem}
+.hero-card p{font-size:0.82rem;color:var(--muted2);margin-bottom:1.5rem}
+
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.mini-stat{background:var(--bg4);border-radius:10px;padding:0.9rem 1rem}
+.mini-stat-val{
+  font-family:var(--serif);font-size:1.6rem;color:var(--gold2);
+  line-height:1;margin-bottom:0.2rem
+}
+.mini-stat-label{font-size:0.73rem;color:var(--muted);font-weight:500;letter-spacing:0.04em}
+
+.status-badge{
+  display:flex;align-items:center;gap:8px;
+  margin-top:1.25rem;padding:0.6rem 1rem;
+  background:rgba(212,168,83,0.06);border-radius:8px;
+  border:1px solid var(--border);
+  font-size:0.78rem;color:var(--gold3);
+}
+.status-dot{
+  width:7px;height:7px;border-radius:50%;background:#4ade80;
+  animation:pulse 2s infinite;flex-shrink:0;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.85)}}
+
+/* Scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--muted);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;
+  opacity:0;animation:slideUp 0.8s 1s ease forwards;
+}
+.scroll-line{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollDown 2s 1.5s infinite ease-in-out;
+}
+@keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* Section labels */
+.sec-eyebrow{
+  font-size:0.72rem;font-weight:500;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:0.75rem;
+}
+.sec-eyebrow::before{
+  content:'';width:24px;height:1px;background:var(--gold);display:block;
+}
+
+h2{
+  font-family:var(--serif);
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  line-height:1.1;margin-bottom:3rem;
+}
+
+/* ── ABOUT ── */
+#about{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start}
+.about-text{color:var(--muted2);line-height:1.9;font-size:1rem;font-weight:300}
+.about-text p+p{margin-top:1rem}
+
+.about-highlight{
+  background:var(--bg3);border:1px solid var(--border);border-radius:16px;
+  padding:2rem;margin-top:2rem;
+}
+.about-highlight p{font-size:0.88rem;font-style:italic;color:var(--gold3);line-height:1.8}
+
+.award-list{display:flex;flex-direction:column;gap:1rem}
+.award-item{
+  background:var(--bg3);border:1px solid var(--border);border-radius:14px;
+  padding:1.2rem 1.4rem;display:flex;gap:1rem;align-items:flex-start;
+  transition:border-color 0.2s;
+}
+.award-item:hover{border-color:var(--border2)}
+.award-icon{
+  width:36px;height:36px;border-radius:9px;
+  background:rgba(212,168,83,0.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.award-text{font-size:0.88rem;color:var(--muted2);line-height:1.5}
+.award-text strong{display:block;color:var(--text);font-weight:500;margin-bottom:0.2rem}
+
+/* ── SKILLS ── */
+.skills-section{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1rem}
+.skill-group{
+  background:var(--bg3);border:1px solid var(--border);border-radius:16px;
+  padding:1.5rem;transition:all 0.25s;
+}
+.skill-group:hover{border-color:var(--border2);transform:translateY(-3px)}
+.skill-group-title{
+  font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.skill-tag{
+  padding:0.3rem 0.8rem;border:1px solid var(--border);border-radius:100px;
+  font-size:0.78rem;color:var(--muted2);background:var(--bg4);
+  transition:all 0.2s;
+}
+.skill-tag:hover{background:rgba(212,168,83,0.1);border-color:var(--border2);color:var(--gold3)}
+
+/* ── EXPERIENCE ── */
+#experience{background:var(--bg2);border-top:1px solid var(--border)}
+
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{
+  content:'';position:absolute;left:0;top:12px;bottom:0;
+  width:1px;background:linear-gradient(to bottom,var(--gold),rgba(212,168,83,0.05));
+}
+.tl-item{position:relative;padding:0 0 3.5rem 2.5rem}
+.tl-item::before{
+  content:'';position:absolute;left:-5px;top:12px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--gold);border:2px solid var(--bg2);
+}
+.tl-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.5rem}
+.tl-role{font-family:var(--serif);font-size:1.3rem;color:var(--text)}
+.tl-period{
+  font-size:0.75rem;color:var(--gold);font-weight:500;
+  background:rgba(212,168,83,0.08);padding:0.3rem 0.9rem;
+  border-radius:100px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0;
+}
+.tl-company{font-size:0.88rem;color:var(--gold2);margin-bottom:0.75rem;font-weight:500}
+.tl-desc{font-size:0.92rem;color:var(--muted2);line-height:1.8}
+.tl-bullets{list-style:none;margin-top:0.75rem}
+.tl-bullets li{
+  font-size:0.88rem;color:var(--muted2);line-height:1.7;
+  padding-left:1.2rem;position:relative;margin-bottom:0.3rem;
+}
+.tl-bullets li::before{
+  content:'▸';position:absolute;left:0;color:var(--gold);font-size:0.7rem;top:0.2rem;
+}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.project-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:20px;
+  padding:2rem;transition:all 0.3s;position:relative;overflow:hidden;
+}
+.project-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(212,168,83,0.05),transparent 60%);
+  opacity:0;transition:opacity 0.3s;
+}
+.project-card:hover{border-color:var(--border2);transform:translateY(-4px)}
+.project-card:hover::after{opacity:1}
+.project-card.featured{
+  grid-column:1/-1;
+  background:var(--bg3);
+}
+.project-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.project-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(212,168,83,0.1);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+}
+.project-link{
+  font-size:0.78rem;color:var(--gold);text-decoration:none;
+  border:1px solid var(--border);padding:0.3rem 0.9rem;border-radius:100px;
+  transition:all 0.2s;display:flex;align-items:center;gap:5px;
+}
+.project-link:hover{background:rgba(212,168,83,0.1);border-color:var(--border2)}
+.project-period{font-size:0.75rem;color:var(--muted);margin-bottom:0.5rem}
+.project-title{
+  font-family:var(--serif);font-size:1.2rem;color:var(--text);
+  margin-bottom:0.75rem;line-height:1.3;
+}
+.project-desc{font-size:0.88rem;color:var(--muted2);line-height:1.8}
+.project-tech{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
+.tech-tag{
+  padding:0.25rem 0.7rem;border-radius:100px;
+  font-size:0.72rem;font-weight:500;
+  background:rgba(212,168,83,0.08);color:var(--gold3);border:1px solid var(--border);
+}
+.project-metric{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:0.75rem;font-size:0.8rem;
+  color:var(--gold2);font-weight:500;
+}
+
+/* ── CERTIFICATIONS ── */
+#certs{background:var(--bg2);border-top:1px solid var(--border)}
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.cert-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:16px;
+  padding:1.5rem;transition:all 0.25s;position:relative;overflow:hidden;
+}
+.cert-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity 0.25s;
+}
+.cert-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.cert-card:hover::before{opacity:1}
+.cert-org{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:0.75rem;
+}
+.cert-name{font-size:0.92rem;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:0.5rem}
+.cert-date{font-size:0.78rem;color:var(--muted)}
+.cert-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:0.75rem;font-size:0.72rem;
+  background:rgba(212,168,83,0.08);color:var(--gold3);
+  padding:0.25rem 0.7rem;border-radius:100px;border:1px solid var(--border);
+}
+
+/* ── EDUCATION ── */
+.edu-cards{display:flex;flex-direction:column;gap:1.25rem}
+.edu-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:18px;
+  padding:2rem;display:flex;gap:1.75rem;align-items:flex-start;
+  transition:border-color 0.2s;
+}
+.edu-card:hover{border-color:var(--border2)}
+.edu-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(212,168,83,0.1);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+}
+.edu-degree{font-family:var(--serif);font-size:1.15rem;margin-bottom:0.3rem}
+.edu-school{color:var(--gold2);font-size:0.88rem;font-weight:500;margin-bottom:0.3rem}
+.edu-meta{display:flex;gap:1rem;flex-wrap:wrap}
+.edu-year{font-size:0.8rem;color:var(--muted)}
+.edu-score{
+  font-size:0.8rem;color:var(--gold3);font-weight:500;
+  background:rgba(212,168,83,0.08);padding:0.2rem 0.6rem;
+  border-radius:100px;border:1px solid var(--border);
+}
+
+/* ── CONTACT ── */
+#contact{text-align:center}
+.contact-wrap{max-width:580px;margin:0 auto}
+.contact-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:24px;
+  padding:3.5rem 3rem;position:relative;overflow:hidden;margin-top:2rem;
+}
+.contact-card::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:300px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.contact-card h3{
+  font-family:var(--serif);font-size:1.8rem;margin-bottom:0.75rem;
+}
+.contact-card p{color:var(--muted2);font-size:0.95rem;margin-bottom:2rem;font-weight:300}
+.contact-links{display:flex;flex-direction:column;gap:1rem}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.5rem;background:var(--bg4);border:1px solid var(--border);
+  border-radius:12px;text-decoration:none;color:var(--text);
+  transition:all 0.2s;font-size:0.9rem;
+}
+.contact-link:hover{border-color:var(--border2);background:rgba(212,168,83,0.06);transform:translateX(4px)}
+.contact-link-icon{
+  width:36px;height:36px;border-radius:9px;
+  background:rgba(212,168,83,0.1);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+.contact-link-text{text-align:left}
+.contact-link-label{font-size:0.72rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;font-weight:500}
+.contact-link-val{font-size:0.92rem;color:var(--gold2)}
+
+footer{
+  text-align:center;padding:2rem;
+  border-top:1px solid var(--border);
+  color:var(--muted);font-size:0.8rem;
+}
+.footer-name{color:var(--gold2);font-family:var(--serif)}
+
+/* Animations */
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(28px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-card{display:none}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .skills-section{grid-template-columns:1fr 1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .project-card.featured{grid-column:1}
+  .certs-grid{grid-template-columns:1fr 1fr}
+  nav{padding:1rem 4vw}
+  .nav-links{gap:1.5rem}
+}
+@media(max-width:600px){
+  .skills-section{grid-template-columns:1fr}
+  .certs-grid{grid-template-columns:1fr}
+  .tl-header{flex-direction:column}
+  section{padding:5rem 5vw}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="stars"></div>
+
+<nav>
+  <span class="nav-logo">Sai Akshita Manthani</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#certs">Certifications</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-eyebrow"><span></span>AI & Machine Learning Engineer</div>
+      <h1>Crafting <em>Intelligent</em><br>Solutions</h1>
+      <p class="hero-tagline">Computer Science student specialising in AI & ML at Vignan's Institute - building real-world systems that merge data intelligence with impactful design.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-gold">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="avatar">SA</div>
+      <h3>Sai Akshita Manthani</h3>
+      <p>B.Tech CSE (AI & ML) · Hyderabad, India</p>
+      <div class="mini-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-val">8.94</div>
+          <div class="mini-stat-label">CGPA / 10</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">98%</div>
+          <div class="mini-stat-label">AI & ML Cert</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">3+</div>
+          <div class="mini-stat-label">Live Projects</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">10+</div>
+          <div class="mini-stat-label">Certifications</div>
+        </div>
+      </div>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Open to internships & opportunities
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-eyebrow">About Me</div>
+  <h2>Who I Am</h2>
+  <div class="about-grid">
+    <div>
+      <div class="about-text">
+        <p>I'm a motivated fourth-year B.Tech student in Computer Science (AI & ML) at Vignan's Institute of Management and Technology for Women, Hyderabad, with a CGPA of 8.94.</p>
+        <p>My passion lies in building intelligent systems - from real-time IoT-based AI models to patient monitoring platforms. I combine strong theoretical foundations with hands-on engineering to develop solutions that genuinely make a difference.</p>
+        <p>Beyond academics, I serve as General Secretary and NSS Coordinator at my college, leading community service initiatives and social outreach programs. I also serve as a Student Coordinator at Kalam's Institute of Youth Excellence, managing large-scale events and representing the college student body officially.</p>
+      </div>
+      <div class="about-highlight">
+        <p>"Awarded by Telangana state's IT minister for academic excellence in AI & ML. Secured 3rd place in an IBM Idea Presentation at Vignan's Institute. Scored 98% in AI & ML certification on Internshala - recognised as a top performer."</p>
+      </div>
+      <br>
+      <div class="sec-eyebrow" style="margin-top:2rem">Core Skills</div>
+      <div class="skills-section">
+        <div class="skill-group">
+          <div class="skill-group-title">AI / ML</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Machine Learning</span>
+            <span class="skill-tag">Artificial Intelligence</span>
+            <span class="skill-tag">Random Forest</span>
+            <span class="skill-tag">Flask</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Dev & Tools</div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML/CSS/JS</span>
+            <span class="skill-tag">C Programming</span>
+            <span class="skill-tag">Arduino / IoT</span>
+            <span class="skill-tag">Data Analytics</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Soft Skills</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Leadership</span>
+            <span class="skill-tag">Coordination</span>
+            <span class="skill-tag">Networking</span>
+            <span class="skill-tag">Self-learning</span>
+            <span class="skill-tag">Event Mgmt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-list">
+      <div class="sec-eyebrow">Achievements & Awards</div>
+      <div class="award-item">
+        <div class="award-icon">🏆</div>
+        <div class="award-text">
+          <strong>Academic Excellence Award</strong>
+          Awarded by Telangana's IT Minister for outstanding performance in AI & ML
+        </div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🥉</div>
+        <div class="award-text">
+          <strong>3rd Place - IBM Idea Presentation</strong>
+          Magic Bus SkillBuild in association with IBM, at Vignan's Institute
+        </div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">⭐</div>
+        <div class="award-text">
+          <strong>Top Performer - AI & ML Certification</strong>
+          Scored 98% in Internshala's AI & ML training (6-week program)
+        </div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🌿</div>
+        <div class="award-text">
+          <strong>NSS General Secretary</strong>
+          Leading community service and social outreach at VIMTW
+        </div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🚀</div>
+        <div class="award-text">
+          <strong>KIYE Student Coordinator</strong>
+          Coordinated Kalam's Space Convention 2025 & Vigyan Vaibhav 2k25
+        </div>
+      </div>
+      <div class="award-item">
+        <div class="award-icon">🏛️</div>
+        <div class="award-text">
+          <strong>Ministry of Culture - Certificate of Appreciation</strong>
+          Issued by the Government of India
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-eyebrow">Work Experience</div>
+  <h2>Professional Journey</h2>
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-header">
+        <div>
+          <div class="tl-role">Data Annotator</div>
+          <div class="tl-company">Innodata · Virtual</div>
+        </div>
+        <div class="tl-period">Dec 2025 - Jan 2026</div>
+      </div>
+      <ul class="tl-bullets">
+        <li>Worked on AI/LLM data annotation projects using the Multimango platform, contributing to training data preparation and quality evaluation for ML models.</li>
+        <li>Followed detailed client guidelines to annotate, review, and validate data with high accuracy.</li>
+        <li>Gained hands-on experience with task workflows, quality standards, and large-scale AI operations environments.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-header">
+        <div>
+          <div class="tl-role">Data Analytics Simulation</div>
+          <div class="tl-company">Deloitte Australia · Virtual (Forage)</div>
+        </div>
+        <div class="tl-period">Jul 2025</div>
+      </div>
+      <ul class="tl-bullets">
+        <li>Participated in a virtual job simulation designed by Deloitte's Data Analytics team.</li>
+        <li>Analysed and interpreted datasets to draw business insights; cleaned and visualised data using analytical tools.</li>
+        <li>Presented data-driven recommendations to demonstrate real-world business problem-solving ability.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-header">
+        <div>
+          <div class="tl-role">Student Coordinator</div>
+          <div class="tl-company">Kalam's Institute of Youth Excellence (KIYE) · Hyderabad</div>
+        </div>
+        <div class="tl-period">Feb 2025 - Present</div>
+      </div>
+      <ul class="tl-bullets">
+        <li>Bridging college and KIYE events - managed operations at Vigyan Vaibhav 2k25 (organised by KIYE, DRDO & AESI) and Kalam's Space Convention 2025.</li>
+        <li>Representing the college student body in an official capacity, connecting organisers, volunteers and participants.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-eyebrow">Projects</div>
+  <h2>What I've Built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card featured reveal">
+      <div class="project-header">
+        <div class="project-icon">🥬</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <a href="https://github.com/AkshitaManthani/FreshSense-AI" class="project-link" target="_blank">GitHub ↗</a>
+          <a href="https://github.com/AkshitaManthani/FreshSense-AI" class="project-link" target="_blank" style="color:var(--gold2)">Demo ↗</a>
+        </div>
+      </div>
+      <div class="project-period">Jan 2026 - Apr 2026</div>
+      <div class="project-title">FreshSense AI - Dynamic Shelf-Life Prediction for Packaged Food</div>
+      <p class="project-desc">Built an AI + IoT system to predict the remaining shelf life of packaged food using real-time temperature and humidity data from a DHT22 sensor with Arduino Uno. Developed a Flask-based dashboard for real-time monitoring, alerts, and visualisation. Includes email notifications and a cloud-compatible Demo Mode using simulated sensor data for deployment.</p>
+      <div class="project-metric">📈 R² Score: 0.964 - Random Forest Regression</div>
+      <div class="project-tech">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Flask</span>
+        <span class="tech-tag">Arduino / IoT</span>
+        <span class="tech-tag">DHT22 Sensor</span>
+        <span class="tech-tag">Random Forest</span>
+        <span class="tech-tag">Data Visualisation</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-header">
+        <div class="project-icon">🏥</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <a href="https://github.com/AkshitaManthani" class="project-link" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="project-period">Sep 2025 - Nov 2025</div>
+      <div class="project-title">AI-Based Patient Monitoring System</div>
+      <p class="project-desc">Real-time monitoring of patient vitals - Heart Rate, SpO₂, Body Temperature, Systolic & Diastolic BP. Intelligently detects critical anomalies, provides dynamic precautionary guidance, and sends automated SMS alerts to doctors via Twilio. Exports metrics to CSV/Excel and generates summary charts.</p>
+      <div class="project-tech">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Twilio SMS</span>
+        <span class="tech-tag">Real-time Analytics</span>
+        <span class="tech-tag">CSV/Excel Export</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-header">
+        <div class="project-icon">🧵</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <a href="https://github.com/AkshitaManthani" class="project-link" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="project-period">Apr 2025 - Jun 2025</div>
+      <div class="project-title">Exploring Textiles of India - Interactive Web App</div>
+      <p class="project-desc">An informative web project showcasing the rich diversity of Indian textiles - regional fabrics, traditional weaving techniques, and cultural significance. Focused on user-friendly design and clear presentation to raise awareness about India's textile heritage.</p>
+      <div class="project-tech">
+        <span class="tech-tag">HTML</span>
+        <span class="tech-tag">CSS</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">UI/UX Design</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="sec-eyebrow">Certifications & Training</div>
+  <h2>Verified Learning</h2>
+  <div class="certs-grid">
+
+    <div class="cert-card reveal">
+      <div class="cert-org">Oracle</div>
+      <div class="cert-name">Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</div>
+      <div class="cert-date">Aug - Oct 2025</div>
+      <div class="cert-badge">✓ OCI Certified</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">Internshala Trainings</div>
+      <div class="cert-name">Artificial Intelligence & Machine Learning - 6-Week Certified Training</div>
+      <div class="cert-date">Aug - Sep 2025</div>
+      <div class="cert-badge">⭐ Top Performer · 98%</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">Deloitte Australia</div>
+      <div class="cert-name">Data Analytics Job Simulation</div>
+      <div class="cert-date">Jul 2025</div>
+      <div class="cert-badge">✓ Forage Platform</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">IBM</div>
+      <div class="cert-name">Artificial Intelligence Fundamentals</div>
+      <div class="cert-date">Feb 2025</div>
+      <div class="cert-badge">✓ IBM Certified</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">MSME · 30 Days Virtual</div>
+      <div class="cert-name">Python Programming & Short-Term Training: Python to AI</div>
+      <div class="cert-date">Jan - Feb 2025</div>
+      <div class="cert-badge">✓ Completed</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">Ministry of Culture, Govt. of India</div>
+      <div class="cert-name">Certificate of Appreciation</div>
+      <div class="cert-date">Aug 2024</div>
+      <div class="cert-badge">🏛️ Govt. of India</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">Be 10x · Virtual</div>
+      <div class="cert-name">AI Tools Workshop</div>
+      <div class="cert-date">May 2024</div>
+      <div class="cert-badge">✓ Certified</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">Cambridge English Interchange</div>
+      <div class="cert-name">Level 3 Course</div>
+      <div class="cert-date">Jan 2024 - May 2025</div>
+      <div class="cert-badge">✓ Cambridge</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-org">Rashtrapati Nilayam</div>
+      <div class="cert-name">CPR & First Aid Awareness Session</div>
+      <div class="cert-date">Feb 2024 - Feb 2025</div>
+      <div class="cert-badge">✓ Certified</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-eyebrow">Education</div>
+  <h2>Academic Background</h2>
+  <div class="edu-cards">
+
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">B.Tech - Computer Science & Engineering (AI & ML)</div>
+        <div class="edu-school">Vignan's Institute of Management and Technology for Women</div>
+        <div class="edu-meta">
+          <span class="edu-year">2023 - 2027</span>
+          <span class="edu-score">CGPA 8.94 / 10</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-icon">📚</div>
+      <div>
+        <div class="edu-degree">Senior Secondary (XII) · Science Stream</div>
+        <div class="edu-school">Sri Chaitanya Junior Kalasala - TSBIE</div>
+        <div class="edu-meta">
+          <span class="edu-year">2023</span>
+          <span class="edu-score">98.50%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-icon">🏫</div>
+      <div>
+        <div class="edu-degree">Secondary (X) · SSC</div>
+        <div class="edu-school">St. Little Theresa's High School</div>
+        <div class="edu-meta">
+          <span class="edu-year">2021</span>
+          <span class="edu-score">CGPA 10.00 / 10</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-eyebrow" style="justify-content:center">Get In Touch</div>
+  <h2>Let's Connect</h2>
+  <div class="contact-wrap">
+    <div class="contact-card reveal">
+      <h3>Open to Opportunities</h3>
+      <p>I'm actively looking for internships and collaborations in AI, ML, and data-driven projects. Let's build something meaningful.</p>
+      <div class="contact-links">
+        <a href="mailto:akshitamanthani@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <div class="contact-link-text">
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-val">akshitamanthani@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+919966645749" class="contact-link">
+          <div class="contact-link-icon">📱</div>
+          <div class="contact-link-text">
+            <div class="contact-link-label">Phone</div>
+            <div class="contact-link-val">+91 99666 45749</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/sai-akshitamanthani-347626300" target="_blank" class="contact-link">
+          <div class="contact-link-icon">💼</div>
+          <div class="contact-link-text">
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-val">sai-akshitamanthani</div>
+          </div>
+        </a>
+        <a href="https://github.com/AkshitaManthani" target="_blank" class="contact-link">
+          <div class="contact-link-icon">🐙</div>
+          <div class="contact-link-text">
+            <div class="contact-link-label">GitHub</div>
+            <div class="contact-link-val">AkshitaManthani</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & crafted for <span class="footer-name">Sai Akshita Manthani</span> · 2026 · Hyderabad, India</p>
+</footer>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,.btn,.project-card,.cert-card,.award-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='48px';ring.style.height='48px';ring.style.borderColor='rgba(212,168,83,0.7)';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(212,168,83,0.4)';});
+});
+
+// Stars
+const starsEl=document.getElementById('stars');
+for(let i=0;i<120;i++){
+  const s=document.createElement('div');s.className='star';
+  const size=Math.random()*2+0.5;
+  s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;--min:${0.05+Math.random()*0.1};--max:${0.4+Math.random()*0.5}`;
+  starsEl.appendChild(s);
+}
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
